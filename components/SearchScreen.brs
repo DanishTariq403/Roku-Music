@@ -160,6 +160,7 @@ sub onKeyboardTextChanged()
 
     query = m.global.microphoeSearchKeyboard.textEditBox.text
     if query = invalid then query = ""
+    m.pendingFocusResults = true
     ApplySearchQuery(query, true)
 end sub
 
@@ -487,7 +488,7 @@ function OnKeyEvent(key as string, press as boolean) as boolean
         m.btnSubmit.setFocus(false)
         m.inputKeyboard.setFocus(true)
         return true
-    else if key = "down" and m.searchBar.hasFocus() and not IsKeyboardOpen()
+    else if key = "down" and m.searchBar.hasFocus() and not IsKeyboardOpen() and not m.resultsGroup.visible
         m.searchBar.setFocus(false)
         m.keywordsGrid.setFocus(true)
         return true
