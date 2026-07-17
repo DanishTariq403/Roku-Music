@@ -1,0 +1,28 @@
+<component name="TrialScreen" extends="Group" initialFocus="btnSubscribe" >
+    <script type="text/brightscript" uri="TrialScreen.brs" />
+    <interface>
+          <field id="btnSubscribeSelect" alias="btnSubscribe.buttonSelected" />
+          <field id="btnTrialSelect" alias="btnTrial.buttonSelected" />
+
+        
+    </interface>
+
+    <children>
+        <Poster translation="[0,0]" width="1920" height="1080" uri="pkg:/images/TSBG.png" />
+          <Button id="btnBack" translation="[1687,76]" height="66" minWidth="132"
+            maxWidth="132" iconUri="" focusedIconUri="" showFocusFootprint="true"
+            focusBitmapUri="pkg:/images/btnCloseTF.png"
+            focusFootprintBitmapUri="pkg:/images/btnCloseTUF.png" />
+
+              <Button id="btnSubscribe" translation="[198,382]" height="537" minWidth="426"
+            maxWidth="426" iconUri="" focusedIconUri="" showFocusFootprint="true"
+            focusBitmapUri="pkg:/images/btnSubTF.png"
+            focusFootprintBitmapUri="pkg:/images/btnSubTUF.png" />
+
+              <Button id="btnTrial" translation="[648,382]" height="537" minWidth="426"
+            maxWidth="426" iconUri="" focusedIconUri="" showFocusFootprint="true"
+            focusBitmapUri="pkg:/images/btnTrialF.png"
+            focusFootprintBitmapUri="pkg:/images/btnTrialUF.png" />
+    </children>
+    
+</component>

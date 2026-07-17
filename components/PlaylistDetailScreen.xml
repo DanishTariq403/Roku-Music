@@ -1,0 +1,53 @@
+<component name="PlaylistDetailScreen" extends="Group">
+    <script type="text/brightscript" uri="PlaylistDetailScreen.brs" />
+    <script type="text/brightscript" uri="pkg:/components/Navbar.brs" />
+
+    <interface>
+        <field id="playlistInfo" type="assocarray" onChange="onPlaylistInfo" />
+        <field id="isTrialExpired" type="boolean" onChange="showSubPopup" />
+    </interface>
+
+    <children>
+                <NavBar id="navBar" />
+
+        <Poster translation="[0,0]" width="1920" height="1080" uri="pkg:/images/BG.png" />
+        <Poster translation="[40,324]" width="1850" height="56" uri="pkg:/images/PLTH.png" />
+
+        <Poster id="headerBg" uri="pkg:/images/PLH.png" width="1980" height="288" translation="[10,0]" />
+
+        <Label id="screenTitle" translation="[40,40]" width="1200" height="96" wrap="true" horizAlign="left" vertAlign="true" numLines="1" color="#FFFFFF">
+            <Font role="font" uri="pkg:/components/Fonts/Figtree-Black.ttf" size="56" />
+        </Label>
+
+        <Label id="metaLabel" translation="[40,148]" horizAlign="left" width="1200" height="24" color="#FFFFFF">
+            <Font role="font" uri="pkg:/components/Fonts/Figtree-Medium.ttf" size="20" />
+        </Label>
+               <Poster uri="pkg:/images/btnPAUF.png" width="180" height="52" translation="[40,196]" />
+
+        <Button id="btnPlayAll" focusable="true" translation="[32,188]" height="68" minWidth="196" maxWidth="196"
+          iconUri="" focusedIconUri="" showFocusFootprint="true"
+            focusBitmapUri="pkg:/images/btnPAF.png"
+            focusFootprintBitmapUri="pkg:/images/.png" />
+
+        
+
+        <MarkupGrid id="tracksGrid"
+            itemComponentName="TrackListItem"
+            translation="[40,381]"
+            itemSpacing="[0,0]"
+            itemSize="[1850,104]"
+            numColumns="1"
+            numRows="7"
+            drawFocusFeedback="false"
+            vertFocusAnimationStyle="floatingFocus"
+            rowFocusAnimationStyle="fixedFocus"
+            focusBitmapUri="pkg:/images/WF.png" />
+
+        <BusySpinner id="spinner" translation="[912,636]" />
+
+        <Timer id="videoDurationTimer" repeat="true" duration="1" />
+
+        <Poster id="blurOL" uri="pkg:/images/blurOL.png" width="1920" height="1080" translation="[0,0]" visible="false" />
+
+    </children>
+</component>

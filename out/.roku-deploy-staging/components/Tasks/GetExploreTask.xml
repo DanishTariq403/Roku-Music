@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<component name="GetExploreTask" extends="Task">
+
+    <interface>
+        <field id="content" type="assocarray" />
+    </interface>
+
+    <script type="text/brightscript" uri="pkg:/components/ItemComponents/SingleRowItemLayout.brs" />
+    <script type="text/brightscript" uri="pkg:/components/ItemComponents/ExploreRowItemLayout.brs" />
+    <script type="text/brightscript" uri="GetExploreTask.brs" />
+
+</component>

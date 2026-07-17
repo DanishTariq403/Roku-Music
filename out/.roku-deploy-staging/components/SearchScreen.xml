@@ -1,0 +1,144 @@
+<component name="SearchScreen" extends="Group" initialFocus="searchBar">
+    <script type="text/brightscript" uri="SearchScreen.brs" />
+    <script type="text/brightscript" uri="Navbar.brs" />
+
+    <interface>
+        <field id="isTrialExpired" type="boolean" onChange="showSubPopup" />
+    </interface>
+
+    <children>
+        <Poster translation="[0,0]" width="1920" height="1080" uri="pkg:/images/BG.png" />
+
+        <Button id="searchBar"
+            translation="[161,48]"
+            maxWidth="1730"
+            minWidth="1730"
+            height="100"
+            iconUri=""
+            focusedIconUri=""
+            showFocusFootprint="true"
+            focusFootprintBitmapUri="pkg:/images/searchBar.png"
+            focusBitmapUri="pkg:/images/searchBarF.png" />
+
+        <Label id="searchQueryLabel"
+            translation="[257,81]"
+            width="1200"
+            height="40"
+            vertAlign="center"
+            horizAlign="left"
+            color="#888888"
+            text="Search for songs">
+            <Font role="font" uri="pkg:/components/Fonts/Inter-Regular.otf" size="24" />
+        </Label>
+
+        <Label id="searchHintLabel"
+            translation="[1400,78]"
+            width="460"
+            height="40"
+            vertAlign="center"
+            horizAlign="right"
+            color="#666666"
+           >
+            <Font role="font" uri="pkg:/components/Fonts/Inter-Regular.otf" size="18" />
+        </Label>
+
+        <Group id="browseGroup">
+            <Label id="popularLabel"
+                translation="[161,168]"
+                width="400"
+                height="24"
+                text="POPULAR SEARCHES"
+                color="#888888">
+                <Font role="font" uri="pkg:/components/Fonts/Inter-Bold.otf" size="14" />
+            </Label>
+
+            <MarkupGrid id="keywordsGrid"
+                itemComponentName="SearchKeywordItem"
+                translation="[161,200]"
+                itemSpacing="[8,8]"
+                itemSize="[150,64]"
+                numColumns="13"
+                numRows="1"
+                drawFocusFeedback="false"
+                vertFocusAnimationStyle="fixedFocus"
+                rowFocusAnimationStyle="fixedFocus"
+                focusBitmapUri="pkg:/images/keywordFocus.png" />
+
+            <Label id="genresLabel"
+                translation="[161,296]"
+                width="400"
+                height="40"
+                text="Browse Genres"
+                color="#FFFFFF">
+                <Font role="font" uri="pkg:/components/Fonts/Inter-Bold.otf" size="28" />
+            </Label>
+
+            <MarkupGrid id="genresGrid"
+                itemComponentName="SearchGenreItem"
+                translation="[161,348]"
+                itemSpacing="[16,24]"
+                itemSize="[421,200]"
+                numColumns="4"
+                numRows="3"
+                drawFocusFeedback="true"
+                vertFocusAnimationStyle="floatingFocus"
+                rowFocusAnimationStyle="fixedFocus"
+                focusBitmapUri="pkg:/images/genreFocus.png" />
+        </Group>
+
+        <Group id="resultsGroup" visible="false">
+            <Label id="resultsLabel"
+                translation="[161,168]"
+                width="800"
+                height="32"
+                text="Results"
+                color="#FFFFFF">
+                <Font role="font" uri="pkg:/components/Fonts/Inter-Bold.otf" size="24" />
+            </Label>
+
+            <MarkupGrid id="videosList"
+                itemComponentName="SearchVideoItem"
+                translation="[161,210]"
+                itemSpacing="[28,28]"
+                itemSize="[310,351]"
+                numColumns="5"
+                numRows="2"
+                drawFocusFeedback="false"
+                vertFocusAnimationStyle="fixedFocus"
+                rowFocusAnimationStyle="fixedFocus"
+                focusBitmapUri="pkg:/images/videoF.png" />
+
+            <Poster id="NVF" visible="false" translation="[682,309]" width="556" height="464" uri="pkg:/images/NVF.png" />
+        </Group>
+
+        <Poster id="blurOL" uri="pkg:/images/blurOL.png" width="1920" height="1080" translation="[0,0]" visible="false" />
+
+        <Group id="inputGroup" visible="false">
+            <Rectangle id="keyboardBg"
+                translation="[0,0]"
+                width="1920"
+                height="1080"
+                color="#000000"
+                opacity="0.7" />
+            <MiniKeyboard id="inputKeyboard"
+                translation="[669,250]"
+                showTextEditBox="false"
+                keyColor="#FFFFFF"
+                focusedKeyColor="#121212" />
+            <Button id="btnSubmit"
+                translation="[819,900]"
+                minWidth="284"
+                maxWidth="284"
+                height="80"
+                iconUri=""
+                focusedIconUri=""
+                focusBitmapUri="pkg:/images/btnSubmitF.png"
+                focusFootprintBitmapUri="pkg:/images/btnSubmitUF.png"
+                showFocusFootprint="true" />
+        </Group>
+
+        <Timer id="resultsFocusTimer" duration="0.05" repeat="false" />
+
+        <Navbar id="navbar" />
+    </children>
+</component>

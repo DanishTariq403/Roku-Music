@@ -1,0 +1,43 @@
+<component name="SingleRowItem" extends="Group">
+    <script type="text/brightscript" uri="SingleRowItemLayout.brs" />
+    <script type="text/brightscript" uri="SingleRowItem.brs" />
+    <interface>
+        <field id="itemContent" type="node" onChange="onItemContent" />
+        <field id="focusPercent" type="float" onChange="showFocus" />
+        <field id="rowHasFocus" type="boolean" onChange="showFocus" />
+        <field id="gridHasFocus" type="boolean" onChange="showFocus" />
+    </interface>
+    <children>
+        <Poster id="itemBg" loadDisplayMode="scaleToFill" translation="[0,0]" width="326" height="88" uri="" visible="false" />
+        <MaskGroup id="bgMask" translation="[0,0]" maskSize="[262,262]" maskUri="pkg:/images/squareMask.png">
+            <Rectangle id="moodBg" color="0x333355FF" width="262" height="160" translation="[0,0]" visible="false" />
+            <Poster id="bg"  loadDisplayMode="scaleToZoom"  width="262" height="262" uri="pkg:/images/GI.png" />
+        </MaskGroup>
+
+        <EmojiLabel id="moodEmoji" translation="[119,40]" width="40" height="40" horizAlign="center" vertAlign="center" emojiSize="32" visible="false" />
+
+        <Poster id="overlay" translation="[0,0]" width="262" height="262" uri="" visible="false" />
+
+        <Rectangle id="badgeBg" color="0xFF3B30FF" width="90" height="28" translation="[8,8]" visible="false" />
+        <Label id="badge" translation="[8,8]" width="90" height="28" horizAlign="center" vertAlign="center" color="#FFFFFF" visible="false">
+            <Font role="font" uri="pkg:/components/Fonts/Inter-ExtraBold.otf" size="12" />
+        </Label>
+
+        <Label id="rank" translation="[8,4]" width="80" height="80" horizAlign="center" vertAlign="center" color="#FFFFFF" visible="false">
+            <Font role="font" uri="pkg:/components/Fonts/Inter-Bold.otf" size="48" />
+        </Label>
+
+        <Label id="title" translation="[0,270]" width="262" height="30" vertAlign="top" horizAlign="left" wrap="true" maxLines="1" color="#d1d1d1">
+            <Font role="font" uri="pkg:/components/Fonts/Inter-ExtraBold.otf" size="20" />
+        </Label>
+
+        <Label id="subtitle" translation="[0,298]" width="262" height="24" vertAlign="top" horizAlign="left" wrap="true" maxLines="1" color="#AAAAAA" visible="false">
+            <Font role="font" uri="pkg:/components/Fonts/Inter-Regular.otf" size="16" />
+        </Label>
+
+        <Poster id="progressBg" uri="pkg:/images/progress_bg.png" width="238" height="4" translation="[8,252]" visible="true" />
+        <Poster id="progressFill" uri="pkg:/images/progress_fill.png" width="0" height="4" translation="[8,252]" visible="false" />
+
+        <Poster id="focus" translation="[0,0]" width="262" height="320" uri="pkg:/images/squareFocus.png" visible="false" />
+    </children>
+</component>

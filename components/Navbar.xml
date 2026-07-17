@@ -1,0 +1,72 @@
+<component name="Navbar" extends="Group">
+    <script type="text/brightscript"  />
+
+<children>
+    <Poster id="NBG" uri="pkg:/images/nBc.png"  width="121" height="1080" translation="[0,0]" />
+
+<Button id="btnSearchN" translation="[0,137]" height="90" minWidth="121"
+            maxWidth="121" iconUri="" focusedIconUri="" showFocusFootprint="true"
+            focusBitmapUri="pkg:/images/btnSeaEF.png"
+            focusFootprintBitmapUri="pkg:/images/btnSeaEUf.png" /> 
+            
+     
+    <Button id="btnHomeN" translation="[0,267]" height="90" minWidth="121"
+            maxWidth="121" iconUri="" focusedIconUri="" showFocusFootprint="true"
+            focusBitmapUri="pkg:/images/btnHoEF.png"
+            focusFootprintBitmapUri="pkg:/images/btnHoEuf.png" />
+
+              <Button id="btnSubN" translation="[0,397]" height="90" minWidth="121"
+            maxWidth="121" iconUri="" focusedIconUri="" showFocusFootprint="true"
+            focusBitmapUri="pkg:/images/btnSubEF.png"
+            focusFootprintBitmapUri="pkg:/images/btnSubEuf.png" />
+
+
+            <Button id="btnFavN" translation="[0,527]" height="90" minWidth="121"
+            maxWidth="121" iconUri="" focusedIconUri="" showFocusFootprint="true"
+            focusBitmapUri="pkg:/images/btnFavEF.png"
+            focusFootprintBitmapUri="pkg:/images/btnFavEuf.png" />
+
+           
+        
+
+          
+
+            <Button id="btnSettingN" translation="[0,657]" height="90" minWidth="121"
+            maxWidth="121" iconUri="" focusedIconUri="" showFocusFootprint="true"
+            focusBitmapUri="pkg:/images/btnBSEF.png"
+            focusFootprintBitmapUri="pkg:/images/btnBSEuf.png" />
+
+              <Button id="btnRSN" translation="[0,568]" height="90" minWidth="121"
+            maxWidth="121" iconUri="" focusedIconUri="" showFocusFootprint="true"
+            focusBitmapUri="pkg:/images/btnRSEF.png"
+            focusFootprintBitmapUri="pkg:/images/btnRSEuf.png" visible="false" />
+
+              <Button id="btnFFN" translation="[0,652]" height="90" minWidth="121"
+            maxWidth="121" iconUri="" focusedIconUri="" showFocusFootprint="true"
+            focusBitmapUri="pkg:/images/btnFFEF.png"
+            focusFootprintBitmapUri="pkg:/images/btnFFEuf.png" visible="false" />
+
+             <Button id="btnARN" translation="[0,736]" height="90" minWidth="121"
+            maxWidth="121" iconUri="" focusedIconUri="" showFocusFootprint="true"
+            focusBitmapUri="pkg:/images/btnAREF.png"
+            focusFootprintBitmapUri="pkg:/images/btnAREuf.png" visible="false" />
+             <Button id="btnMEN" translation="[0,820]" height="90" minWidth="121"
+            maxWidth="121" iconUri="" focusedIconUri="" showFocusFootprint="true"
+            focusBitmapUri="pkg:/images/btnMEEF.png"
+            focusFootprintBitmapUri="pkg:/images/btnMEEuf.png" visible="false" />
+             <Button id="btnBWN" translation="[0,904]" height="90" minWidth="121"
+            maxWidth="121" iconUri="" focusedIconUri="" showFocusFootprint="true"
+            focusBitmapUri="pkg:/images/btnBWEF.png"
+            focusFootprintBitmapUri="pkg:/images/btnBWEuf.png" visible="false" />
+
+
+
+              <Button id="AppLockPopup" translation="[0,0]" height="1080" minWidth="1920" visible="false"
+            maxWidth="1920" iconUri="" focusedIconUri="" showFocusFootprint="true"
+            focusBitmapUri="pkg:/images/subExpPopup.png"
+            focusFootprintBitmapUri="pkg:/images/subExpPopup.png" />
+
+
+</children>
+    
+</component>

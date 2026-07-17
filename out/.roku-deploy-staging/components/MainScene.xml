@@ -1,0 +1,57 @@
+<component name="MainScene" extends="Scene">
+    <script type="text/brightscript" uri="MainScene.brs" />
+    <script type="text/brightscript" uri="UI/ShowHomeScreen.brs" />
+    <script type="text/brightscript" uri="UI/ShowSettingScreen.brs" />
+    <script type="text/brightscript" uri="UI/ShowSearchScreen.brs" />
+    <script type="text/brightscript" uri="UI/ShowFavoriteScreen.brs" />
+    <script type="text/brightscript" uri="UI/ShowMusicScreen.brs" />
+    <script type="text/brightscript" uri="UI/ShowPlaylistDetailScreen.brs" />
+    <script type="text/brightscript" uri="UI/ShowTrialScreen.brs" />
+    <script type="text/brightscript" uri="UI/ShowSubscriptionScreen.brs" />
+    <script type="text/brightscript" uri="UI/ScreenStack.brs" />
+    <script type="text/brightscript" uri="UI/VerifySubscription.brs" />
+    <interface>
+         <field id="screenName" type="string"  />
+         <field id="video" type="node"  />
+                  <field id="isSubDiscount" type="boolean"  />
+
+
+        <function name="ShowFavoriteScreen" />
+        <function name="ResetScreen" />
+        <field id="AppLimit" type="integer" />
+        <field id="isSubYearly" type="boolean" />
+        <field id="isSubscribed" type="boolean" alwaysNotify="true" />
+            <function name="getCurrentDuration" />
+        <function name="setCurrentDuration" />
+        <function name="ShowSubscriptionScreen" />
+        <function name="ShowFavoriteScreen" />
+        <function name="ShowHomeScreen" />
+        <function name="ShowSettingScreen" />
+        <function name="ShowSearchScreen" />
+        <function name="ShowMusicScreen" />
+        <function name="ShowPlaylistDetailScreen" />
+        <function name="CloseCurrentScreen" />
+
+        <field id="isSubScreenSelected" type="boolean" value="false" />
+        <field id="currentCategory" type="string" />
+
+        <field id="appExit" type="bool" alwaysnotify="true" value="false" />
+
+
+    </interface>
+    <children>
+                <Timer id="appTimer" duration="1" repeat="true" />
+             <DynamicKeyboard id="microphoeSearchKeyboard" visible="false" />
+             <Poster uri="pkg:/images/SS.png" translation="[0,0]" width="1920" height="1080" />
+<BusySpinner
+      id = "spinner" translation="[912,914]"
+     />
+     
+            <audio
+            id="VideoPlayer"
+            translation="[0,0]"
+        />
+
+    </children>
+
+</component>

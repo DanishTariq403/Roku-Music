@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "brightscript",
+            "request": "launch",
+            "name": "Launch Roku",
+            "host": "192.168.1.24",
+            "password": "0000",
+            "rootDir": "${workspaceFolder}"
+        }
+    ]
+}

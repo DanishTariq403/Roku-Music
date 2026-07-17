@@ -1,0 +1,7 @@
+<component name="FixM3U8Task" extends="Task">
+  <interface>
+    <field id="url" type="string" />
+    <field id="fixedUrl" type="string" />
+  </interface>
+  <script type="text/brightscript" uri="pkg:/components/Tasks/FixM3U8Task.brs" />
+</component>

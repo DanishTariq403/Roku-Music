@@ -1,0 +1,32 @@
+<component name="HeroItem" extends="Group">
+    <script type="text/brightscript" uri="HeroItem.brs" />
+    <interface>
+        <field id="itemContent" type="node" onChange="onItemContent" />
+        <field id="focusPercent" type="float"  />
+        <field id="rowHasFocus" type="boolean" onChange="showRowFocus" />
+        
+    </interface>
+    <children>
+                <!-- <Poster   uri="pkg:/images/heroFocus.png" translation="[0,0]" width="1584" height="440" /> -->
+
+     
+        <Poster uri="pkg:/images/RBG.png"  translation="[8,8]" width="774" height="121" />
+        <Poster   id="thumbnailPoster" translation="[8,8]" width="121" height="121" />
+       
+                <Label id="videoTitle" visible="true" translation="[190,24]" width="300"  wrap="true" maxLines="1" >
+                     <Font role="font" uri="pkg:/components/Fonts/Inter-Regular.otf" size="34" />
+
+                    </Label>
+                       <Label id="videoDuration" visible="true" translation="[190,77]" width="300" wrap="true" opacity="0.7" maxLines="1" >
+                     <Font role="font" uri="pkg:/components/Fonts/Inter-Regular.otf" size="30" />
+
+                    </Label>
+
+
+
+
+     
+        
+    </children>
+    
+</component>
