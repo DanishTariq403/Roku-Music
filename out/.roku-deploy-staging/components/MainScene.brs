@@ -35,6 +35,7 @@ sub init()
     m.global.observeField("duration","checkCurrentDuration")
      m.global.microphoeSearchKeyboard = m.top.findNode("microphoeSearchKeyboard")
  m.global.microphoeSearchKeyboard.textEditBox.voiceEntryType="generic"
+ m.global.microphoeSearchKeyboard.textEditBox.voiceEnabled=true
 InitScreenStack()
 SetupGoogleAnalytics4()
 SetupHomeItemFocusFields()

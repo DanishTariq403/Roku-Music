@@ -11,14 +11,36 @@
 
         <Button id="searchBar"
             translation="[161,48]"
-            maxWidth="1730"
-            minWidth="1730"
+            maxWidth="1590"
+            minWidth="1590"
             height="100"
             iconUri=""
             focusedIconUri=""
             showFocusFootprint="true"
             focusFootprintBitmapUri="pkg:/images/searchBar.png"
             focusBitmapUri="pkg:/images/searchBarF.png" />
+
+        <Group id="micButtonGroup" translation="[1770,48]">
+            <Rectangle id="micButtonBorder"
+                width="100"
+                height="100"
+                color="#FFFFFF"
+                visible="false" />
+            <Rectangle id="micButtonBg"
+                translation="[3,3]"
+                width="94"
+                height="94"
+                color="#666666" />
+            <Button id="micButton"
+                maxWidth="100"
+                minWidth="100"
+                height="100"
+                text="MIC"
+                color="#666666"
+                focusedTextColor="#666666"
+                iconUri="pkg:/images/mic.png"
+                focusedIconUri="pkg:/images/mic.png" />
+        </Group>
 
         <Label id="searchQueryLabel"
             translation="[257,81]"
@@ -33,7 +55,7 @@
 
         <Label id="searchHintLabel"
             translation="[1400,78]"
-            width="460"
+            width="351"
             height="40"
             vertAlign="center"
             horizAlign="right"

@@ -41,7 +41,7 @@
     </interface>
     <children>
                 <Timer id="appTimer" duration="1" repeat="true" />
-             <DynamicKeyboard id="microphoeSearchKeyboard" visible="false" />
+             <DynamicKeyboard id="microphoeSearchKeyboard" opacity="0" />
              <Poster uri="pkg:/images/SS.png" translation="[0,0]" width="1920" height="1080" />
 <BusySpinner
       id = "spinner" translation="[912,914]"

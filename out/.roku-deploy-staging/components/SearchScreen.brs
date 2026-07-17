@@ -10,6 +10,8 @@ sub init()
 
     m.blurOL = m.top.findNode("blurOL")
     m.searchBar = m.top.findNode("searchBar")
+    m.micButton = m.top.findNode("micButton")
+    m.micButtonBorder = m.top.findNode("micButtonBorder")
     m.searchQueryLabel = m.top.findNode("searchQueryLabel")
     m.searchHintLabel = m.top.findNode("searchHintLabel")
     m.browseGroup = m.top.findNode("browseGroup")
@@ -28,6 +30,7 @@ sub init()
     BuildGenresGrid()
 
     m.searchBar.observeField("buttonSelected", "onSearchBarSelect")
+    m.micButton.observeField("buttonSelected", "onMicButtonSelect")
     m.inputKeyboard.observeField("text", "onKeyboardText")
     m.btnSubmit.observeField("buttonSelected", "onBtnSubmitSelect")
     m.keywordsGrid.observeField("itemSelected", "onKeywordSelect")
@@ -38,9 +41,12 @@ sub init()
     m.resultsFocusTimer = m.top.findNode("resultsFocusTimer")
     m.resultsFocusTimer.observeField("fire", "onResultsFocusTimer")
 
-    m.global.microphoeSearchKeyboard.hideTextBox = true
+    ' hideTextBox=true makes the DynamicKeyboard default focus to its key grid
+    ' instead of the voice-enabled text box, which breaks both D-pad routing and
+    ' mic capture - keep the text box as the real rendered/focusable child here.
+    m.global.microphoeSearchKeyboard.hideTextBox = false
     m.global.microphoeSearchKeyboard.textEditBox.observeField("text", "onKeyboardTextChanged")
-    m.global.microphoeSearchKeyboard.textEditBox.observeField("isDictating", "onKeyboardTextChanged")
+    m.global.microphoeSearchKeyboard.textEditBox.observeField("isDictating", "onDictatingChanged")
 
     m.syncingKeyboardText = false
     m.top.observeField("visible", "onVisibleChange")
@@ -110,17 +116,53 @@ sub onVisibleChange()
     if m.top.visible
         m.scene.screenName = "Search"
         navBarInit("Search")
-        ShowBrowseMode()
         UpdateSearchQueryLabel()
-        m.searchBar.setFocus(true)
+
+        ' Returning from a child screen (e.g. the music player) should land back
+        ' on the results just searched, not reset to browse mode - only a fresh
+        ' entry with no active query should show browse mode.
+        if m.currentSearchQuery <> ""
+            ShowResultsMode(m.currentSearchQuery)
+            ScheduleResultsGridFocus()
+        else
+            ShowBrowseMode()
+            m.searchBar.setFocus(true)
+        end if
     else
         CloseSearchKeyboard()
         CancelSearchTask()
     end if
 end sub
 
+' Giving the voice-enabled node real focus is required for the remote's mic
+' button to trigger dictation - but that node (Roku's DynamicKeyboard) swallows
+' every D-pad key while focused and never lets them bubble back to this screen,
+' so it can't be the thing the search bar quietly holds while resting. It's a
+' deliberate, modal action instead: select this button, then focus returns
+' automatically once dictation finishes (onDictatingChanged/onKeyboardTextChanged
+' are field observers, not key handlers, so they still fire regardless).
+sub SetMicButtonFocus(focused as boolean)
+    m.micButton.setFocus(focused)
+    m.micButtonBorder.visible = focused
+end sub
+
+sub onMicButtonSelect()
+    editBox = m.global.microphoeSearchKeyboard.textEditBox
+    if editBox = invalid then return
+
+    ' Selecting this button only gives the voice-enabled node real focus - Roku's
+    ' physical mic button still has to be pressed next to actually start dictation
+    ' (isDictating flips true only then, handled in onDictatingChanged). Saying
+    ' "Listening..." here, before that press, would be premature.
+    m.pendingFocusResults = true
+    m.searchQueryLabel.text = "Press mic button on remote to talk"
+    m.searchQueryLabel.color = "#FFFFFF"
+    m.searchHintLabel.visible = false
+    m.micButtonBorder.visible = false
+    editBox.setFocus(true)
+end sub
+
 sub onSearchBarSelect()
-    m.searchBar.buttonSelected = false
     OpenSearchKeyboard()
 end sub
 
@@ -158,11 +200,44 @@ sub onKeyboardTextChanged()
     if m.scene.screenName <> "Search" then return
     if m.syncingKeyboardText = true then return
 
-    query = m.global.microphoeSearchKeyboard.textEditBox.text
+    editBox = m.global.microphoeSearchKeyboard.textEditBox
+    if editBox = invalid then return
+    if editBox.isDictating then return
+
+    query = editBox.text
     if query = invalid then query = ""
+    query = SanitizeVoiceQuery(query)
+
     m.pendingFocusResults = true
     ApplySearchQuery(query, true)
+
+    if query = ""
+        m.searchBar.setFocus(true)
+    end if
 end sub
+
+sub onDictatingChanged()
+    if m.scene.screenName <> "Search" then return
+
+    editBox = m.global.microphoeSearchKeyboard.textEditBox
+    if editBox = invalid then return
+
+    if editBox.isDictating
+        m.searchQueryLabel.text = "Listening..."
+        m.searchQueryLabel.color = "#FFFFFF"
+        m.searchHintLabel.visible = false
+    else
+        onKeyboardTextChanged()
+    end if
+end sub
+
+function SanitizeVoiceQuery(query as string) as string
+    trimmed = query.Trim()
+    while trimmed.Len() > 0 and (Right(trimmed, 1) = "." or Right(trimmed, 1) = "?" or Right(trimmed, 1) = "!")
+        trimmed = Left(trimmed, trimmed.Len() - 1)
+    end while
+    return trimmed.Trim()
+end function
 
 sub ApplySearchQuery(query as string, syncKeyboards as boolean)
     if query = invalid then query = ""
@@ -182,15 +257,18 @@ sub ApplySearchQuery(query as string, syncKeyboards as boolean)
 end sub
 
 sub onBtnSubmitSelect()
-    m.btnSubmit.buttonSelected = false
-
     query = m.inputKeyboard.text
     if query = invalid then query = ""
     m.pendingFocusResults = true
     ApplySearchQuery(query, true)
 
     CloseSearchKeyboard()
-    ScheduleResultsGridFocus()
+
+    if query = ""
+        m.searchBar.setFocus(true)
+    else
+        ScheduleResultsGridFocus()
+    end if
 end sub
 
 function IsKeyboardOpen() as boolean
@@ -479,6 +557,24 @@ function OnKeyEvent(key as string, press as boolean) as boolean
         return true
     else if key = "OK" and m.searchBar.hasFocus()
         OpenSearchKeyboard()
+        return true
+    else if key = "right" and m.searchBar.hasFocus() and not IsKeyboardOpen()
+        m.searchBar.setFocus(false)
+        SetMicButtonFocus(true)
+        return true
+    else if key = "left" and m.micButton.hasFocus()
+        SetMicButtonFocus(false)
+        m.searchBar.setFocus(true)
+        return true
+    else if key = "down" and m.micButton.hasFocus() and not m.resultsGroup.visible
+        SetMicButtonFocus(false)
+        m.keywordsGrid.setFocus(true)
+        return true
+    else if key = "down" and m.micButton.hasFocus() and m.resultsGroup.visible
+        SetMicButtonFocus(false)
+        if m.videosList.content <> invalid and m.videosList.content.getChildCount() > 0
+            m.videosList.setFocus(true)
+        end if
         return true
     else if key = "down" and IsKeyboardOpen() and m.inputKeyboard.visible and not IsNavbarFocused()
         m.inputKeyboard.setFocus(false)
