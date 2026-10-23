@@ -511,8 +511,8 @@ function OnKeyEvent(key as string, press as boolean) as boolean
         m.videosList.setFocus(true)
         return true
     else if key = "down" and m.btnHomeN.hasFocus()
-        m.btnHomeN.setFocus(false)
-        m.btnSubN.setFocus(true)
+        ' PaywallDisabledForTesting - TEMPORARY (2026-10-22): steps over btnSubN while it is hidden.
+        NavBarMoveFocus(m.btnHomeN, m.btnSubN, "down")
         return true
     else if key = "down" and m.btnSubN.hasFocus()
         m.btnSubN.setFocus(false)
@@ -535,8 +535,8 @@ function OnKeyEvent(key as string, press as boolean) as boolean
         m.btnHomeN.setFocus(true)
         return true
     else if key = "up" and m.btnFavN.hasFocus()
-        m.btnFavN.setFocus(false)
-        m.btnSubN.setFocus(true)
+        ' PaywallDisabledForTesting - TEMPORARY (2026-10-22): steps over btnSubN while it is hidden.
+        NavBarMoveFocus(m.btnFavN, m.btnSubN, "up")
         return true
     else if key = "up" and m.btnSettingN.hasFocus()
         m.btnSettingN.setFocus(false)

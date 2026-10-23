@@ -1,0 +1,258 @@
+<component name="HomeScreen" extends="Group" visible="false">
+    <script type="text/brightscript" uri="HomeScreen.brs" />
+    <script type="text/brightscript" uri="Navbar.brs" />
+    <script type="text/brightscript" uri="pkg:/components/ItemComponents/SingleRowItemLayout.brs" />
+    <interface>
+                        <field id="isTrialExpired" type="boolean" onChange="showSubPopup" />
+                        <field id="category" type="string"  />
+                                            <field id="isSubSuccess" type="boolean" onChange="onSubSuccess" />
+          <field id="btnDiscountSelect" type="boolean" alwaysNotify="true" />
+
+
+    </interface>
+    <children>
+      
+      <Poster uri="pkg:/images/BG.png" translation="[0,0]" width="1920" height="1080" />
+         <RowList id="heroList" 
+            itemComponentName="HeroItem"
+            translation="[238,0]"
+            itemSpacing="[2000,2000]"
+            itemSize="[1673,506]"
+            rowItemSize = "[ [1673, 506]]"
+            
+            numRows="1"
+            rowFocusAnimationStyle ="fixedFocus"
+            drawFocusFeedback="false"
+            showRowCounter="[true]"
+         />
+
+         <Group  id="heroGroup" translation="[0,0]" inheritParentTransform = "true">
+        <Poster scaleRotateCenter="[836,253]"  loadDisplayMode="scaleToZoom"  uri="pkg:/images/heroBG.png" translation="[724,0]" width="1196" height="570" />
+
+           <!-- <MaskGroup
+      
+      masksize = "[ 1196, 570 ]"
+      translation="[724,0]"
+      
+      maskuri = "pkg:/images/heroMask.png" >   -->
+        <Poster scaleRotateCenter="[598,275]"   loadDisplayMode="scaletoZoom"  id="thumbnailPoster" translation="[724,0]" width="1196" height="570" />
+        <!-- </MaskGroup> -->
+                <Poster scaleRotateCenter="[836,253]"  loadDisplayMode="scaleToZoom"  uri="pkg:/images/heroMask.png" translation="[121,0]" width="1799" height="570" />
+
+      
+        
+                <Label id="optionTitle" visible="true" translation="[161,185]" width="450"  wrap="true"  maxLines="2" >
+                     <Font role="font" uri="pkg:/components/Fonts/Inter-Regular.otf" size="20" />
+
+                    </Label>
+                            <Poster id="AddTofavInstruction"  translation="[161,262]" width="200" height="52" uri="pkg:/images/press.png" />
+
+       
+       
+                <Label id="videoTitle" visible="true" translation="[161,101]" width="600" height="100" wrap="true"  maxLines="1" >
+                     <Font role="font" uri="pkg:/components/Fonts/Inter-Bold.otf" size="60" />
+
+                    </Label>
+
+                    <Group id="nowPlayingGroup" visible="false" translation="[0, 0]">
+                        <Poster uri="pkg:/images/heroplayBG.png" translation="[161, 424.5]" width="450" height="72" />
+                         <maskgroup maskSize="[56,56]"       translation="[169,432]" maskUri="pkg:/images/artistMask.png">
+                        <Poster id="npThumb" loadDisplayMode="scaleToZoom" translation="[0, 0]" width="56" height="56" />
+                        </maskgroup>
+
+                                                <Poster id="heroPlayPause" uri="pkg:/images/btnplay.png" loadDisplayMode="scaleToZoom" translation="[541, 450]" width="50" height="20" />
+
+                        <Label id="npTitle" translation="[245, 442]" width="296" wrap="false" maxLines="1" color="#FFFFFF">
+                            <Font role="font" uri="pkg:/components/Fonts/Inter-Bold.otf" size="15" />
+                        </Label>
+                        <Label id="npArtist" translation="[245, 462]" width="296" wrap="false" maxLines="1" opacity="0.7" color="#FFFFFF">
+                            <Font role="font" uri="pkg:/components/Fonts/Inter-Regular.otf" size="13" />
+                        </Label>
+                        <Button id="btnHeroPlayPause" focusable="true" translation="[153, 416]" maxwidth="458" minwidth="458" height="80"
+                            iconUri="" focusedIconUri="" showFocusFootprint="true"
+                            focusBitmapUri="pkg:/images/btnHP.png"
+                            focusFootprintBitmapUri="pkg:/images/.png" />
+                    </Group>
+
+                    </Group>
+
+             
+
+
+         <Group id="dotGroup" visible="false">
+         <Poster translation="[1498,664]" width="160" height="40" uri="pkg:/images/dotbg.png" />
+          <LayoutGroup
+            id="dotContainer"
+            translation="[1514, 676]"  
+            layoutDirection="horiz"
+            itemSpacings="[12,12]"
+        />
+        </Group>
+        <Group id="videosGroup" translation="[0,0]" >
+
+                <Button id="btnCat1" focusable="true" iconUri=""
+                text="" focusedIconUri="" visible="false" translation="[208, 520]"
+                maxWidth="231" minWidth="231" height="80"
+                focusBitmapUri="pkg:/images/btnCat1F.png"
+                focusFootprintBitmapUri="pkg:/images/btnCat1S.png" showFocusFootprint="true" />
+
+                <Button id="btnCat2" focusable="true" iconUri=""
+                text="" focusedIconUri="" visible="false" translation="[449, 520]"
+                maxWidth="231" minWidth="231" height="80"
+                focusBitmapUri="pkg:/images/btnCat2F.png"
+                focusFootprintBitmapUri="pkg:/images/btnCat2UF.png" showFocusFootprint="true" />
+                  <Button id="btnCat3" focusable="true" iconUri=""
+                text="" focusedIconUri="" visible="false" translation="[690, 520]"
+                maxWidth="231" minWidth="231" height="80"
+                focusBitmapUri="pkg:/images/btnCat3F.png"
+                focusFootprintBitmapUri="pkg:/images/btnCat3UF.png" showFocusFootprint="true" />
+                <Button id="btnCat4" focusable="true" iconUri=""
+                text="" focusedIconUri="" visible="false" translation="[931, 520]"
+                maxWidth="231" minWidth="231" height="80"
+                focusBitmapUri="pkg:/images/btnCat4F.png"
+                focusFootprintBitmapUri="pkg:/images/btnCat4UF.png" showFocusFootprint="true" />
+  <Button id="btnCat5" focusable="true" iconUri=""
+                text="" focusedIconUri="" visible="false" translation="[1172, 520]"
+                maxWidth="231" minWidth="231" height="80"
+                focusBitmapUri="pkg:/images/btnCat5F.png"
+                focusFootprintBitmapUri="pkg:/images/btnCat5UF.png" showFocusFootprint="true" />
+            <Button id="btnCat6" focusable="true" iconUri=""
+                text="" focusedIconUri="" visible="false" translation="[1413, 520]"
+                maxWidth="231" minWidth="231" height="80"
+                focusBitmapUri="pkg:/images/btnCat6F.png"
+                focusFootprintBitmapUri="pkg:/images/btnCat6UF.png" showFocusFootprint="true" />
+                <Button id="btnCat7" focusable="true" iconUri=""
+                text="" focusedIconUri="" visible="false" translation="[1654, 520]"
+                maxWidth="231" minWidth="231" height="80"
+                focusBitmapUri="pkg:/images/btnCat7F.png"
+                focusFootprintBitmapUri="pkg:/images/btnCat7UF.png" showFocusFootprint="true" />
+
+
+                  <RowList id="watchList" 
+            itemComponentName="WatchItem"
+            translation="[338,534]"
+            rowItemSpacing="[[20,0]]"
+            itemSize="[1636,300]"
+            rowItemSize = "[ [300, 120]]"
+            rowLabelOffset="[[5,20]]"
+            showRowLabel="true"
+            visible="false"
+            rowLabelColor="#FFFFFF"
+             numRows="5"
+             rowFocusAnimationStyle ="fixedFocus"
+            drawFocusFeedback="false"
+            focusBitmapUri="pkg:/images/WF.png"
+        />
+
+
+          <RowList id="videosList" 
+            itemComponentName="SingleRowItem"
+            translation="[161,610]"
+            itemSpacing="[27,70]"
+            itemSize="[1758,410]"
+            rowLabelOffset="[[5,20]]"
+            showRowLabel="true"
+            showRowCounter="[true]"
+            rowCounterRightOffset="40.0"
+            rowLabelColor="#FFFFFF"
+            numRows="10"
+            rowFocusAnimationStyle="fixedFocus"
+            vertFocusAnimationStyle="fixedFocus"
+            drawFocusFeedback="false"
+        >
+        <Font role="rowLabelFont" uri="pkg:/components/Fonts/Inter-Bold.otf" size="28" />
+        </RowList>
+
+        
+
+          <MarkupGrid id="videosGrid" 
+            itemComponentName="SingleRowitem"
+            translation="[208,510]"
+            itemSpacing="[22,60]"
+            itemSize="[409,314]"
+            visible="false"
+           
+             numRows="3"
+             numColumns="4"
+            rowFocusAnimationStyle ="fixedFocusWrap"
+            vertFocusAnimationStyle="fixedFocus"
+            drawFocusFeedback="true"
+            focusBitmapUri="pkg:/images/itemFocus.png"
+         />
+
+
+         
+
+
+
+         </Group>
+                 <Timer   id="ChangeImageTimer" repeat="true" duration="7" />
+                 <Timer   id="focusTimer" repeat="false" fire="setFocusOnVideoList" duration="0.2" />
+
+                    <Poster id="blurOL" uri="pkg:/images/blurOL.png" width="1920" height="1080" translation="[0,0]" visible="false" />
+
+         <Navbar id="navbar" />
+
+         
+                    <Animation id="heroUpAnim"
+       duration="0.1"
+       repeat="false"
+       easeFunction="linear" >
+    <Vector2DFieldInterpolator 
+        key="[0.0, 1.0]"
+        keyValue="[ [338.0, 738.0], [338.0, 523.0] ]"
+    fieldToInterp="videosList.translation" />
+</Animation>
+
+<Animation id="herodownAnim"
+       duration="0.1"
+       repeat="false"
+       easeFunction="linear" >
+    <Vector2DFieldInterpolator 
+        key="[0.0, 1.0]"
+        keyValue="[  [338.0, 523.0], [338.0, 738.0] ]"
+    fieldToInterp="videosList.translation" />
+</Animation>
+
+<Animation id="videosUpAnim"
+       duration="0.01"
+       repeat="false"
+       easeFunction="linear" >
+    <Vector2DFieldInterpolator 
+        key="[0.0, 1.0]"
+        keyValue="[ [338,534], [338.0, -1000.0] ]"
+    fieldToInterp="watchList.translation" />
+</Animation>
+
+<Animation id="videosdownAnim"
+       duration="0.01"
+       repeat="false"
+       easeFunction="linear" >
+    <Vector2DFieldInterpolator 
+        key="[0.0, 1.0]"
+        keyValue="[  [338.0, -1000.0], [338,534] ]"
+    fieldToInterp="watchList.translation" />
+</Animation>
+
+
+
+            <Group id="exitPopup" visible="false">
+        <Poster uri="pkg:/images/exitPopup.png" translation="[0,0]" width="1920" height="1080"/>
+          <Button id="btnExit" translation="[521,912]" height="68" minWidth="425"
+            maxWidth="425" iconUri="" focusedIconUri="" showFocusFootprint="true"
+            focusBitmapUri="pkg:/images/btnExitF.png"
+            focusFootprintBitmapUri="pkg:/images/btnExitUF.png" />
+            <Button id="btnClaim" translation="[968,912]" height="68" minWidth="425"
+            maxWidth="425" iconUri="" focusedIconUri="" showFocusFootprint="true"
+            focusBitmapUri="pkg:/images/btnClaimF.png"
+            focusFootprintBitmapUri="pkg:/images/btnClaimUF.png" />
+     </Group>
+
+     <BusySpinner
+      id = "spinner" translation="[912,636]"
+     />
+
+     
+    </children>
+    
+</component>

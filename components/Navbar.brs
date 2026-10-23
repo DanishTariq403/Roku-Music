@@ -162,8 +162,99 @@ sub navBarInit(screenName as string)
 
     '    m.scene=m.top.getScene()
 
+    ' PaywallDisabledForTesting - TEMPORARY (2026-10-22): hide the Subscription
+    ' tab and close its gap. No-op while the switch is off.
+    NavBarApplyPaywallTestingSwitch()
 
 end sub
+
+' ---------------------------------------------------------------------------
+' PaywallDisabledForTesting - TEMPORARY (2026-10-22). This file runs in each
+' screen's own scope, which cannot see MainScene's PaywallDisabledForTesting(),
+' so it reads the copy MainScene.init() publishes on m.global before any screen
+' is created. Absent/invalid = switch off = original behaviour.
+' ---------------------------------------------------------------------------
+function IsPaywallDisabledForTesting() as boolean
+    flag = m.global.paywallDisabledForTesting
+    if flag = invalid then return false
+    return flag = true
+end function
+
+' The bar's tabs top to bottom, as Navbar.xml lays them out (Search 137, Home
+' 267, Sub 397, Fav 527, Setting 657). The legacy category buttons
+' btnRSN..btnBWN are hidden in the XML and not part of the bar.
+function NavBarTabOrder() as object
+    return [m.btnSearchN, m.btnHomeN, m.btnSubN, m.btnFavN, m.btnSettingN]
+end function
+
+' PaywallDisabledForTesting - TEMPORARY (2026-10-22): hides btnSubN and moves
+' the tabs below it (Fav, Setting) up, so the remaining tabs fill the first
+' slots of the original layout and keep its even 130px pitch. Idempotent -
+' navBarInit() runs again on most shows - because the slot positions are
+' captured from the XML once per screen, before anything has moved.
+sub NavBarApplyPaywallTestingSwitch()
+    if not IsPaywallDisabledForTesting() then return
+    if m.btnSubN = invalid then return
+
+    tabs = NavBarTabOrder()
+    if m.navTabSlotsY = invalid
+        m.navTabSlotsY = []
+        for each navTab in tabs
+            if navTab <> invalid then m.navTabSlotsY.Push(navTab.translation[1])
+        end for
+    end if
+
+    m.btnSubN.visible = false
+
+    slot = 0
+    for each navTab in tabs
+        if navTab <> invalid
+            if navTab.visible
+                navTab.translation = [navTab.translation[0], m.navTabSlotsY[slot]]
+                slot = slot + 1
+            end if
+        end if
+    end for
+end sub
+
+' Up/down between navbar tabs. Focuses `target`, or - when it is hidden
+' (PaywallDisabledForTesting hides btnSubN) - the next visible tab past it in
+' the direction of travel; if there is none, focus stays on fromTab. With every
+' tab visible this is exactly fromTab.setFocus(false) : target.setFocus(true),
+' i.e. the original behaviour. TEMPORARY (2026-10-22) with the switch above.
+sub NavBarMoveFocus(fromTab as object, target as object, key as string)
+    dest = NavBarVisibleTab(target, key)
+    if dest = invalid then return
+    if fromTab <> invalid then fromTab.setFocus(false)
+    dest.setFocus(true)
+end sub
+
+function NavBarVisibleTab(target as object, key as string) as object
+    if target = invalid then return invalid
+    if target.visible then return target
+
+    tabs = NavBarTabOrder()
+    stepBy = 1
+    if key = "up" then stepBy = -1
+
+    idx = -1
+    for i = 0 to tabs.Count() - 1
+        if tabs[i] <> invalid
+            if tabs[i].isSameNode(target) then idx = i
+        end if
+    end for
+    if idx < 0 then return invalid
+
+    i = idx + stepBy
+    while i >= 0 and i < tabs.Count()
+        if tabs[i] <> invalid
+            if tabs[i].visible then return tabs[i]
+        end if
+        i = i + stepBy
+    end while
+    return invalid
+end function
+
 sub navBarFocus()
     if m.scene.currentCategory = "All" or m.scene.CurrenCategory = ""
         m.btnHomeN.focusfootprintbitmapuri = "pkg:/images/btnHoS.png"

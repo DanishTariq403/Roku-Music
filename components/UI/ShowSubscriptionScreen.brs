@@ -1,4 +1,9 @@
 sub ShowSubscriptionScreen()
+    ' PaywallDisabledForTesting - TEMPORARY (2026-10-22): no subscription screen
+    ' while the switch is on. Every route lands here: navbar tab, paywall card
+    ' OK, the player's Upgrade button, TrialScreen.
+    if PaywallDisabledForTesting() then return
+
     m.global.analytics.callFunc("logEvent", "subscription_screen_opened", {
             "screen_name": "OnboardingScreen"
         })

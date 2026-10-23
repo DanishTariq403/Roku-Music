@@ -1,4 +1,33 @@
+' PaywallDisabledForTesting - TEMPORARY (2026-10-22). User: "temporary remove
+' the limit logic ... hide the subscription button and screen as well ... so
+' that user has full access to the app content." While this returns true:
+'   - init() forces isSubscribed = true before VerifySubscription(). That opens
+'     every gate that reads it: the per-day listening counter
+'     (videoDurationLimit, still 240 here) and checkCurrentDuration(),
+'     isPaywallActive() in MusicScreen and PlaylistDetailScreen, the
+'     duration-vs-limit play checks on Home, Explore, Search and Favorites, and
+'     Home's exit popup with its Claim-discount offer (shown only to
+'     non-subscribers). Nothing is persisted.
+'   - VerifySubscription() skips the Channel Store query, so its async answer
+'     cannot put isSubscribed back to false. Home boots the same way.
+'   - ShowSubscriptionScreen() returns at once (navbar tab, paywall OK, the
+'     player's Upgrade button, TrialScreen), and Home's Claim-discount handler
+'     does not start a purchase.
+'   - m.global.paywallDisabledForTesting tells the component scopes, which
+'     cannot call this function, to hide the navbar Subscription tab
+'     (Navbar.brs) and the player's Upgrade button (MusicScreen.brs).
+' Return false before a store release - that restores the paywall fully.
+' grep PaywallDisabledForTesting finds every site of this change.
+function PaywallDisabledForTesting() as boolean
+    return true
+end function
+
 sub init()
+    ' PaywallDisabledForTesting - TEMPORARY (2026-10-22): published first, before
+    ' any screen exists, for the component scopes that cannot call the function.
+    m.global.AddField("paywallDisabledForTesting", "boolean", false)
+    m.global.paywallDisabledForTesting = PaywallDisabledForTesting()
+
       m.global.AddField("videoDurationLimit","integer",false)
               m.global.AddField("microphoeSearchKeyboard", "node", false)
               m.global.AddField("videoContent", "contentNode", false)
@@ -39,6 +68,12 @@ sub init()
 InitScreenStack()
 SetupGoogleAnalytics4()
 SetupHomeItemFocusFields()
+    ' PaywallDisabledForTesting - TEMPORARY (2026-10-22): full access. This app
+    ' has no persisted entitlement seed (isSubscribed stays false until the
+    ' Channel Store answers), so it is simply set here, before Home exists, and
+    ' never persisted - switching the flag off brings back the real
+    ' entitlement on the next launch.
+    if PaywallDisabledForTesting() then m.top.isSubscribed = true
         reg = CreateObject("roRegistrySection", m.global.appName)
 
  

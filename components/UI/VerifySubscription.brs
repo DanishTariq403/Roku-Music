@@ -1,4 +1,15 @@
 sub VerifySubscription()
+    ' PaywallDisabledForTesting - TEMPORARY (2026-10-22): no Channel Store query
+    ' while the switch is on - its async answer would set isSubscribed back to
+    ' false for a non-subscriber. Home boots exactly as
+    ' onGetPurchasesForChecking() would boot it (GetJsonTask -> SetContent).
+    if PaywallDisabledForTesting()
+        m.top.isSubscribed = true
+        m.VideoArrayGetter = CreateObject("roSGNode", "GetJsonTask")
+        m.VideoArrayGetter.ObserveField("content", "SetContent")
+        m.VideoArrayGetter.control = "RUN"
+        return
+    end if
 
     m.order_title = "Music Premium Monthly"
     m.order_identifier = "premium_monthly"

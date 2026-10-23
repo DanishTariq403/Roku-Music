@@ -32,6 +32,13 @@ sub init()
     m.btnSave = m.top.findNode("btnSave")
     m.btnDarkMode = m.top.findNode("btnDarkMode")
     m.btnUpgrade = m.top.findNode("btnUpgrade")
+    ' PaywallDisabledForTesting - TEMPORARY (2026-10-22): no Upgrade button (nor
+    ' its idle art) while the switch is on; setHeaderVisible() keeps it hidden.
+    m.btnUpgradeArt = m.top.findNode("btnUpgradeArt")
+    if IsPaywallDisabledForTesting()
+        if m.btnUpgradeArt <> invalid then m.btnUpgradeArt.visible = false
+        if m.btnUpgrade <> invalid then m.btnUpgrade.visible = false
+    end if
     m.videoDuration = m.top.findNode("videoDuration")
     m.videoPosition = m.top.findNode("videoPosition")
     m.titleName = m.top.findNode("titleName")
@@ -318,9 +325,25 @@ sub setHeaderVisible(visible as boolean)
         m.headerPlaylistTitle.visible = visible
     end if
     if m.btnUpgrade <> invalid
-        m.btnUpgrade.visible = visible
+        ' PaywallDisabledForTesting - TEMPORARY (2026-10-22): stays hidden while
+        ' the switch is on. Hidden also keeps it out of focus - onKeyEvent only
+        ' moves up from btnSave to it when m.btnUpgrade.visible.
+        if IsPaywallDisabledForTesting()
+            m.btnUpgrade.visible = false
+        else
+            m.btnUpgrade.visible = visible
+        end if
     end if
 end sub
+
+' PaywallDisabledForTesting - TEMPORARY (2026-10-22). Same reader as Navbar.brs's
+' (this screen does not include Navbar.brs): MainScene publishes the switch on
+' m.global before any screen exists. Absent/invalid = switch off.
+function IsPaywallDisabledForTesting() as boolean
+    flag = m.global.paywallDisabledForTesting
+    if flag = invalid then return false
+    return flag = true
+end function
 
 sub applyRelatedLayout(animate as boolean)
     applyExpandedLayout(false)
