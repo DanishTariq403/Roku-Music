@@ -2223,7 +2223,6 @@ function FetchMoodPlaylistTrack(moodName as string) as object
 
     transfer = CreateObject("roUrlTransfer")
     transfer.SetCertificatesFile("common:/certs/ca-bundle.crt")
-    transfer.InitClientCertificates()
     transfer.SetUrl("http://185.194.218.34:3001/api/playlists/mood?mood=" + transfer.Escape(moodName))
     transfer.SetMinimumTransferRate(1, 12)
 

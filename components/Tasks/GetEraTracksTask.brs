@@ -12,7 +12,6 @@ sub LoadEraTracks()
 
     transfer = CreateObject("roUrlTransfer")
     transfer.SetCertificatesFile("common:/certs/ca-bundle.crt")
-    transfer.InitClientCertificates()
     transfer.SetUrl(m.apiBase + "/api/eras/" + transfer.Escape(era) + "/tracks?limit=50")
     transfer.SetMinimumTransferRate(1, 12)
 

@@ -41,7 +41,6 @@ end sub
 function FetchApi(url as string) as object
     transfer = CreateObject("roUrlTransfer")
     transfer.SetCertificatesFile("common:/certs/ca-bundle.crt")
-    transfer.InitClientCertificates()
     transfer.SetUrl(url)
     transfer.SetMinimumTransferRate(1, 12)
 
